@@ -1,0 +1,480 @@
+---
+// Figma node 137:1840 ("section-enterprise") — dark feature grid + CTA card
+import { Image, Picture } from 'astro:assets';
+import ctaArt from '../assets/figma/hero-art.png'; // same artwork as hero in the source file
+import gdprRing from '../assets/figma/ent-gdpr-ring.svg';
+import gdprStars from '../assets/figma/ent-gdpr-stars.svg';
+import gdprLock from '../assets/figma/ent-gdpr-lock.svg';
+import isoRing from '../assets/figma/ent-iso-ring.svg';
+import isoGlobe from '../assets/figma/ent-iso-globe.svg';
+import isoTextTop from '../assets/figma/ent-iso-text-top.svg';
+import isoTextBtm from '../assets/figma/ent-iso-text-btm.svg';
+import aicpaRing from '../assets/figma/ent-aicpa-ring.svg';
+import aicpaEllipse from '../assets/figma/ent-aicpa-ellipse.svg';
+import aicpaStars from '../assets/figma/ent-aicpa-stars.svg';
+
+import int01 from '../assets/figma/ent-int-01.png';
+import int02 from '../assets/figma/ent-int-02.png';
+import int03 from '../assets/figma/ent-int-03.png';
+import int04 from '../assets/figma/ent-int-04.png';
+import int05 from '../assets/figma/ent-int-05.png';
+import int06 from '../assets/figma/ent-int-06.png';
+import int07 from '../assets/figma/ent-int-07.png';
+import int08 from '../assets/figma/ent-int-08.png';
+import int09 from '../assets/figma/ent-int-09.png';
+import int10 from '../assets/figma/ent-int-10.png';
+import int11 from '../assets/figma/ent-int-11.png';
+
+const rows = [
+  [int01, int02, int03, int04],
+  [int05, int06, int07],
+  [int08, int09, int10, int11],
+];
+---
+
+<section class="enterprise" id="enterprise">
+  <div class="shell">
+    <h2 class="ent-heading reveal">
+      Built for what’s next.
+      <span class="dim">Ready for today.</span>
+    </h2>
+
+    <div class="ent-grid">
+      <article class="ent-card ent-integrations reveal" style="--d:.1s">
+        <p class="section-label" style="--chip:#f7d05b">Integrations</p>
+        <div class="tiles" aria-hidden="true">
+          {
+            rows.map((row, r) => (
+              <div class={`tile-row row-${r}`}>
+                {row.map((logo) => (
+                  <span class="tile">
+                    <Image src={logo} alt="" width={80} densities={[1, 2]} loading="lazy" />
+                  </span>
+                ))}
+              </div>
+            ))
+          }
+          <div class="tiles-fade"></div>
+        </div>
+        <div class="ent-copy">
+          <h3>Integrates with the tools you use most.</h3>
+          <p>Connect your data, apps, and AI tools to a single platform that scales with your business.</p>
+        </div>
+      </article>
+
+      <div class="ent-col">
+        <article class="ent-card reveal" style="--d:.2s">
+          <p class="section-label" style="--chip:#eb5f2e">Security</p>
+          <div class="badges">
+            <div class="badge" aria-label="GDPR compliant">
+              <img src={gdprRing.src} alt="" class="fill" loading="lazy" decoding="async" />
+              <img src={gdprStars.src} alt="" class="fill spin-slow" loading="lazy" decoding="async" />
+              <img src={gdprLock.src} alt="" class="gdpr-lock" width="16" height="19" loading="lazy" decoding="async" />
+              <span class="badge-text gdpr-text">GDPR</span>
+            </div>
+            <div class="badge" aria-label="ISO certified">
+              <img src={isoRing.src} alt="" class="fill" loading="lazy" decoding="async" />
+              <img src={isoGlobe.src} alt="" class="iso-globe spin-slower" loading="lazy" decoding="async" />
+              <img src={isoTextTop.src} alt="" class="iso-arc iso-arc-top" loading="lazy" decoding="async" />
+              <img src={isoTextBtm.src} alt="" class="iso-arc iso-arc-btm" loading="lazy" decoding="async" />
+              <span class="badge-text iso-text">ISO</span>
+            </div>
+            <div class="badge" aria-label="AICPA SOC 2 attested">
+              <img src={aicpaRing.src} alt="" class="aicpa-ring" loading="lazy" decoding="async" />
+              <span class="aicpa-band" aria-hidden="true"></span>
+              <img src={aicpaEllipse.src} alt="" class="aicpa-ellipse" loading="lazy" decoding="async" />
+              <span class="badge-text aicpa-top">AICPA</span>
+              <span class="badge-text aicpa-btm">SOC 2</span>
+              <img src={aicpaStars.src} alt="" class="aicpa-stars" loading="lazy" decoding="async" />
+            </div>
+          </div>
+          <div class="ent-copy">
+            <h3>Built for judgement you can trust.</h3>
+            <p>
+              Enterprise-grade safeguards for customer data, with clear boundaries on what your AI agents can see,
+              decide, and act on.
+            </p>
+          </div>
+        </article>
+
+        <article class="ent-card ent-support reveal" style="--d:.3s">
+          <p class="section-label" style="--chip:#3e875c">Support</p>
+          <div class="ent-copy">
+            <h3>Experts when you need them.</h3>
+            <p>From implementation to optimization, our team works alongside yours to help every AI marketer succeed.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="cta-card reveal" id="contact" style="--d:.1s">
+      <Picture
+        src={ctaArt}
+        alt=""
+        widths={[900, 1400, 2400]}
+        sizes="(max-width: 1400px) 100vw, 1340px"
+        formats={['avif']}
+        fallbackFormat="webp"
+        class="cta-art"
+        loading="lazy"
+      />
+      <div class="cta-shade" aria-hidden="true"></div>
+      <div class="cta-content">
+        <p class="cta-heading">Orchestrate 1:1 customer engagement at scale.</p>
+        <a href="mailto:hello@plotline.so" class="btn btn-white">Contact us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .enterprise {
+    background: var(--night);
+    color: #fff;
+    padding-block: 120px 40px;
+  }
+
+  .ent-heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 3.9vw, 3.5rem);
+    line-height: 1.07;
+    letter-spacing: -0.043em;
+    text-align: center;
+    margin: 0 0 48px;
+  }
+
+  .ent-heading .dim {
+    display: block;
+    color: var(--ink-soft);
+  }
+
+  .ent-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+
+  .ent-col {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .ent-card {
+    background: var(--night-card);
+    border-radius: 8px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  .ent-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .ent-integrations {
+    justify-content: space-between;
+  }
+
+  .ent-support {
+    justify-content: space-between;
+    min-height: 213px;
+  }
+
+  .ent-copy {
+    display: grid;
+    gap: 12px;
+    padding-top: 20px;
+  }
+
+  .ent-copy h3 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.2px;
+  }
+
+  .ent-copy p {
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.2px;
+    max-width: 494px;
+  }
+
+  /* integration tiles */
+  .tiles {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    gap: 66px;
+    padding-block: 40px;
+  }
+
+  .tile-row {
+    display: flex;
+    gap: 100px;
+    width: max-content;
+  }
+
+  .row-0 {
+    animation: drift-a 26s ease-in-out infinite alternate;
+  }
+
+  .row-1 {
+    margin-left: 80px;
+    animation: drift-b 26s ease-in-out infinite alternate;
+  }
+
+  .row-2 {
+    animation: drift-a 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift-a {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-56px);
+    }
+  }
+
+  @keyframes drift-b {
+    from {
+      transform: translateX(-56px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .tile {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    background: var(--night-tile);
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+
+  .tile :global(img) {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  .tiles-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--night-card), rgba(25, 22, 46, 0) 60%);
+    pointer-events: none;
+  }
+
+  /* security badges */
+  .badges {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-block: 22px;
+  }
+
+  .badge {
+    position: relative;
+    width: 156px;
+    height: 156px;
+    flex: none;
+  }
+
+  .fill {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .spin-slow {
+    animation: spin 60s linear infinite;
+  }
+
+  .spin-slower {
+    animation: spin 90s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .badge-text {
+    position: absolute;
+    font-size: 23.4px;
+    color: #c0c0c6;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .gdpr-lock {
+    position: absolute;
+    left: 50%;
+    top: 48.75px;
+    transform: translateX(-50%);
+  }
+
+  .gdpr-text {
+    top: 76px;
+  }
+
+  .iso-globe {
+    position: absolute;
+    inset: 8px;
+    width: 140px;
+    height: 140px;
+  }
+
+  .iso-text {
+    top: calc(50% - 27px);
+  }
+
+  .iso-arc {
+    position: absolute;
+    left: 13.5px;
+    width: 129px;
+  }
+
+  .iso-arc-top {
+    top: 16.5px;
+  }
+
+  .iso-arc-btm {
+    top: 107px;
+  }
+
+  .aicpa-ring {
+    position: absolute;
+    left: 6.8px;
+    top: 6.8px;
+    width: 143px;
+    height: 143px;
+  }
+
+  .aicpa-band {
+    position: absolute;
+    left: 0;
+    top: 69.2px;
+    width: 156px;
+    height: 18.5px;
+    background: var(--night-card);
+    border: 2px solid #4f4595;
+  }
+
+  .aicpa-ellipse {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 135px;
+    height: 135px;
+    transform: translate(-50%, -50%);
+  }
+
+  .aicpa-top {
+    top: 37px;
+    font-weight: 500;
+  }
+
+  .aicpa-btm {
+    top: 92px;
+    font-weight: 500;
+  }
+
+  .aicpa-stars {
+    position: absolute;
+    left: 10.7px;
+    top: 73px;
+    width: 134px;
+  }
+
+  /* CTA */
+  .cta-card {
+    position: relative;
+    max-width: 1340px;
+    margin-inline: auto;
+    height: 520px;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    background: linear-gradient(113deg, #533afd 8%, rgba(83, 58, 253, 0.22) 104%), #222;
+  }
+
+  .cta-card :global(.cta-art) {
+    position: absolute;
+    left: 50%;
+    top: calc(50% - 31px);
+    width: 107%;
+    height: 150%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    animation: kenburns 36s ease-in-out infinite alternate;
+  }
+
+  @keyframes kenburns {
+    from {
+      scale: 1;
+    }
+    to {
+      scale: 1.06;
+    }
+  }
+
+  .cta-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, #05021c 0%, rgba(83, 58, 254, 0) 70%);
+    opacity: 0.9;
+  }
+
+  .cta-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 48px;
+    text-align: center;
+  }
+
+  .cta-heading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 3.33vw, 3rem);
+    line-height: 1.17;
+    max-width: 580px;
+    text-shadow: 0 2px 24px rgba(5, 2, 28, 0.45);
+  }
+
+  @media (max-width: 1100px) {
+    .ent-grid {
+      grid-template-columns: 1fr;
+    }
+    .badges {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .enterprise {
+      padding-top: 80px;
+    }
+    .cta-card {
+      height: 420px;
+    }
+  }
+</style>

@@ -1,0 +1,127 @@
+---
+// Figma node 137:1374 ("logo-strip") — customer logos, rendered as a paused-on-hover marquee.
+import { Image } from 'astro:assets';
+import coindcx from '../assets/figma/logo-coindcx.png';
+import meesho from '../assets/figma/logo-meesho.png';
+import upstox from '../assets/figma/logo-upstox.png';
+import wealthsimple from '../assets/figma/logo-wealthsimple.png';
+import step from '../assets/figma/logo-step.png';
+import caseIcon from '../assets/figma/icon-case-study.svg';
+
+const logos = [
+  { src: coindcx, alt: 'CoinDCX', w: 90 },
+  { src: meesho, alt: 'Meesho', w: 78 },
+  { src: upstox, alt: 'Upstox', w: 92, caseStudy: true },
+  { src: wealthsimple, alt: 'Wealthsimple', w: 114 },
+  { src: step, alt: 'Step', w: 64 },
+];
+---
+
+<section class="logo-strip" aria-label="Trusted by leading consumer companies">
+  <div class="marquee">
+    <div class="marquee-track">
+      {
+        [0, 1].map((copy) => (
+          <div class="marquee-group" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {logos.map((l) => (
+              <div class="logo-card">
+                <Image
+                  src={l.src}
+                  alt={copy === 0 ? l.alt : ''}
+                  width={l.w * 2}
+                  class="logo-img"
+                  style={`width:${l.w}px`}
+                />
+                {l.caseStudy && (
+                  <span class="case-chip">
+                    case study
+                    <img src={caseIcon.src} alt="" width="14" height="14" />
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .logo-strip {
+    padding-bottom: 40px;
+    background: var(--paper);
+  }
+
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 36s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-group {
+    display: flex;
+  }
+
+  .logo-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    width: 288px;
+    height: 76px;
+    padding: 24px;
+    border-right: 1px solid var(--hairline);
+    flex: none;
+  }
+
+  .logo-img {
+    height: auto;
+    filter: grayscale(1);
+    opacity: 0.85;
+    transition:
+      filter 0.3s var(--ease-out),
+      opacity 0.3s var(--ease-out);
+  }
+
+  .logo-card:hover .logo-img {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+
+  .case-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    background: #f0f2f6;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    color: rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+</style>

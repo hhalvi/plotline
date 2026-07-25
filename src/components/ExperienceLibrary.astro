@@ -1,0 +1,946 @@
+---
+// Figma node 137:1439 ("section-experience-library") — horizontally scrolling template gallery
+import bgBlob from '../assets/figma/xl-bg-1.svg';
+import arrow from '../assets/figma/xl-arrow.svg';
+import arrowSm from '../assets/figma/xl-arrow-sm.svg';
+import nudgeArt from '../assets/figma/xl-nudge.svg';
+import streakArt from '../assets/figma/xl-streak.svg';
+import wheel from '../assets/figma/xl-wheel.svg';
+import wheelCenter from '../assets/figma/xl-wheel-center.svg';
+import checkGreen from '../assets/figma/xl-check-green.svg';
+import dotOrange from '../assets/figma/xl-dot-orange.svg';
+import checkOpen from '../assets/figma/xl-check-open.svg';
+import checkDone from '../assets/figma/xl-check-done.svg';
+import coffee from '../assets/figma/xl-coffee.svg';
+import emoji1 from '../assets/figma/xl-emoji-1.svg';
+import emoji2 from '../assets/figma/xl-emoji-2.svg';
+
+const wheelLabels = [
+  { t: '50%', x: 32.9, y: 8.1, r: -20.25 },
+  { t: '0%', x: 68.9, y: 10, r: 23.67 },
+  { t: '25%', x: 94.6, y: 33, r: 67.92 },
+  { t: '20%', x: 93.9, y: 68.1, r: 111.36 },
+  { t: '40%', x: 65.9, y: 94.1, r: 153.21 },
+  { t: '13%', x: 31.9, y: 95.1, r: -163.7 },
+  { t: '13%', x: 3.9, y: 68.1, r: -116.57 },
+  { t: '10%', x: 5.9, y: 33.1, r: -70.73 },
+];
+---
+
+<section class="library" id="library">
+  <div class="shell">
+    <header class="lib-head">
+      <p class="section-label reveal">The Experience Library</p>
+      <div class="lib-head-row">
+        <h2 class="h-section reveal" style="--d:.08s">
+          Stop designing every journey.
+          <span class="dim">Design the possibilities instead.</span>
+        </h2>
+        <div class="lib-arrows reveal" style="--d:.16s">
+          <button class="arrow-btn" data-dir="-1" aria-label="Scroll templates left">
+            <img src={arrow.src} alt="" width="16" height="17" class="flip" />
+          </button>
+          <button class="arrow-btn" data-dir="1" aria-label="Scroll templates right">
+            <img src={arrow.src} alt="" width="16" height="17" />
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="gallery-clip">
+    <div class="gallery" id="template-gallery" tabindex="0">
+      <!-- Card 1 · Product Nudges -->
+      <article class="t-card reveal">
+        <header class="t-head">
+          <div>
+            <h3>Product Nudges</h3>
+            <p>Guide users to their next step.</p>
+          </div>
+          <button class="t-link" aria-expanded="false" aria-controls="xl-expand-1" aria-label="More about Product Nudges">
+            <img src={arrowSm.src} alt="" width="12" height="13" />
+          </button>
+        </header>
+        <div class="t-stage">
+          <img src={bgBlob.src} alt="" class="blob blob-b" aria-hidden="true" loading="lazy" decoding="async" />
+          <div class="mock">
+            <img src={nudgeArt.src} alt="" width="124" height="50" loading="lazy" decoding="async" />
+            <div class="mock-copy">
+              <p class="mock-title">Premium feature unlocked!</p>
+              <p class="mock-sub">Upgrade to enjoy all the extra features.</p>
+            </div>
+            <div class="mock-actions">
+              <span class="pill pill-wide">Upgrade</span>
+              <span class="pill-plain">Go Back</span>
+            </div>
+          </div>
+        </div>
+        <div class="t-expand" id="xl-expand-1" role="region" aria-label="Product Nudges details">
+          <p class="x-body">
+            Tooltips, spotlights, banners and bottom sheets that meet users at the exact moment of
+            intent — targeted to any cohort, triggered by any event, shipped without a release.
+          </p>
+          <ul class="x-links" role="list">
+            <li><a href="#contact">Tooltips &amp; Spotlights <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Banners &amp; Bottom Sheets <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Coachmarks &amp; Tours <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+          </ul>
+          <a href="#contact" class="x-cta">Explore nudge templates</a>
+          <div class="x-media">
+            <img src={nudgeArt.src} alt="" width="93" height="37" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 · Inline Widgets -->
+      <article class="t-card reveal" style="--d:.08s">
+        <header class="t-head">
+          <div>
+            <h3>Inline Widgets</h3>
+            <p>Own every inch of product.</p>
+          </div>
+          <button class="t-link" aria-expanded="false" aria-controls="xl-expand-2" aria-label="More about Inline Widgets">
+            <img src={arrowSm.src} alt="" width="12" height="13" />
+          </button>
+        </header>
+        <div class="t-stage">
+          <img src={bgBlob.src} alt="" class="blob blob-c" aria-hidden="true" loading="lazy" decoding="async" />
+          <div class="mock mock-left">
+            <div class="gs-row">
+              <p class="mock-title-light">Getting Started</p>
+              <span class="pill-soft">3 of 4</span>
+            </div>
+            <div class="progress"><span style="width:73%"></span></div>
+            <ul class="checklist" role="list">
+              <li><img src={checkGreen.src} alt="" width="18" height="18" /><span class="done">Profile Setup</span></li>
+              <li><img src={checkGreen.src} alt="" width="18" height="18" /><span class="done">Import Data</span></li>
+              <li><img src={checkGreen.src} alt="" width="18" height="18" /><span class="done">Invite a teammate</span></li>
+              <li><img src={dotOrange.src} alt="" width="18" height="18" /><span>Publish your first report</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="t-expand" id="xl-expand-2" role="region" aria-label="Inline Widgets details">
+          <p class="x-body">
+            Native widgets that live inside your app&rsquo;s own screens — onboarding checklists,
+            carousels and embedded cards that update in real time and feel like product, not promo.
+          </p>
+          <ul class="x-links" role="list">
+            <li><a href="#contact">Onboarding Checklists <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Carousels &amp; Stories <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Embedded Cards <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+          </ul>
+          <a href="#contact" class="x-cta">Explore widget templates</a>
+          <div class="x-media x-media-row">
+            <img src={checkGreen.src} alt="" width="18" height="18" loading="lazy" decoding="async" />
+            <img src={checkGreen.src} alt="" width="18" height="18" loading="lazy" decoding="async" />
+            <img src={checkGreen.src} alt="" width="18" height="18" loading="lazy" decoding="async" />
+            <img src={dotOrange.src} alt="" width="18" height="18" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 · Gamification -->
+      <article class="t-card reveal" style="--d:.16s">
+        <header class="t-head">
+          <div>
+            <h3>Gamification</h3>
+            <p>Turn actions into habits.</p>
+          </div>
+          <button class="t-link" aria-expanded="false" aria-controls="xl-expand-3" aria-label="More about Gamification">
+            <img src={arrowSm.src} alt="" width="12" height="13" />
+          </button>
+        </header>
+        <div class="t-stage">
+          <img src={bgBlob.src} alt="" class="blob blob-a" aria-hidden="true" loading="lazy" decoding="async" />
+          <div class="mock">
+            <img src={streakArt.src} alt="" width="47" height="95" loading="lazy" decoding="async" />
+            <p class="mock-title">3 Day Streak!</p>
+            <div class="week">
+              <span class="day"><i>Mon</i><img src={checkOpen.src} alt="" width="20" height="20" /></span>
+              <span class="day"><i>Tue</i><img src={checkDone.src} alt="" width="20" height="20" /></span>
+              <span class="day"><i>Wed</i><img src={checkOpen.src} alt="" width="20" height="20" /></span>
+              <span class="day"><i>Thu</i><b>9</b></span>
+              <span class="day"><i>Fri</i><b>10</b></span>
+              <span class="day"><i>Sat</i><b>11</b></span>
+              <span class="day"><i>Sun</i><b>12</b></span>
+            </div>
+            <span class="pill pill-wide">Claim</span>
+          </div>
+        </div>
+        <div class="t-expand" id="xl-expand-3" role="region" aria-label="Gamification details">
+          <p class="x-body">
+            Streaks, spin-the-wheel, scratch cards and reward centres that turn one-off actions
+            into daily habits — with the reward economics fully under your control.
+          </p>
+          <ul class="x-links" role="list">
+            <li><a href="#contact">Streaks &amp; Badges <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Spin the Wheel <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Scratch Cards &amp; Rewards <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+          </ul>
+          <a href="#contact" class="x-cta">Explore gamification</a>
+          <div class="x-media">
+            <img src={streakArt.src} alt="" width="32" height="64" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 · Product Video -->
+      <article class="t-card reveal" style="--d:.24s">
+        <header class="t-head">
+          <div>
+            <h3>Product Video</h3>
+            <p>Show, do not tell.</p>
+          </div>
+          <button class="t-link" aria-expanded="false" aria-controls="xl-expand-4" aria-label="More about Product Video">
+            <img src={arrowSm.src} alt="" width="12" height="13" />
+          </button>
+        </header>
+        <div class="t-stage">
+          <img src={bgBlob.src} alt="" class="blob blob-b" aria-hidden="true" loading="lazy" decoding="async" />
+          <div class="mock mock-gap">
+            <p class="mock-title">It’s raining rewards!</p>
+            <div class="wheel">
+              <img src={wheel.src} alt="" width="118" height="118" loading="lazy" decoding="async" />
+              {
+                wheelLabels.map((l) => (
+                  <span class="wheel-label" style={`left:${l.x}px; top:${l.y}px; transform: rotate(${l.r}deg)`}>
+                    {l.t}
+                  </span>
+                ))
+              }
+              <img src={wheelCenter.src} alt="" class="wheel-center" width="38" height="38" loading="lazy" decoding="async" />
+            </div>
+            <span class="pill">Spin</span>
+          </div>
+        </div>
+        <div class="t-expand" id="xl-expand-4" role="region" aria-label="Product Video details">
+          <p class="x-body">
+            Picture-in-picture videos and full-screen stories that demo features right where users
+            need them — watchable while they keep using the app, measurable to the second.
+          </p>
+          <ul class="x-links" role="list">
+            <li><a href="#contact">Picture-in-Picture Video <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Full-screen Stories <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Feature Walkthroughs <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+          </ul>
+          <a href="#contact" class="x-cta">Explore video templates</a>
+          <div class="x-media">
+            <img src={wheel.src} alt="" width="64" height="64" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 · Outbound Channels -->
+      <article class="t-card reveal" style="--d:.32s">
+        <header class="t-head">
+          <div>
+            <h3>Outbound Channels</h3>
+            <p>Meet users beyond the app.</p>
+          </div>
+          <button class="t-link" aria-expanded="false" aria-controls="xl-expand-5" aria-label="More about Outbound Channels">
+            <img src={arrowSm.src} alt="" width="12" height="13" />
+          </button>
+        </header>
+        <div class="t-stage">
+          <img src={bgBlob.src} alt="" class="blob blob-a" aria-hidden="true" loading="lazy" decoding="async" />
+          <div class="notif notif-top">
+            <div class="notif-head">
+              <span class="notif-brand"><b class="skii">SKII</b> SKII FASHION</span>
+              <span class="notif-when">now</span>
+            </div>
+            <div class="notif-body">
+              <div>
+                <p class="notif-title">Skii beauty Sale is Live!</p>
+                <p class="notif-sub">Press for more</p>
+              </div>
+              <span class="notif-emojis">
+                <img src={emoji1.src} alt="" width="32" height="32" class="tilt-l" loading="lazy" decoding="async" />
+                <img src={emoji2.src} alt="" width="32" height="32" class="tilt-r" loading="lazy" decoding="async" />
+              </span>
+            </div>
+          </div>
+          <div class="notif notif-bottom">
+            <div class="notif-head">
+              <span class="notif-brand"><img src={coffee.src} alt="" width="20" height="20" /> FARBUCKS COFFEE</span>
+              <span class="notif-when">now</span>
+            </div>
+            <div class="notif-body notif-col">
+              <p class="notif-title">Last call for Happy Hour</p>
+              <p class="notif-sub notif-wrap">Ends Sunday, 5/14. Enjoy your last weekend off Frappucino blended beverages.</p>
+            </div>
+          </div>
+        </div>
+        <div class="t-expand" id="xl-expand-5" role="region" aria-label="Outbound Channels details">
+          <p class="x-body">
+            Push, WhatsApp, SMS and email orchestrated with what happens in-product — so every
+            message lands in context, not in isolation.
+          </p>
+          <ul class="x-links" role="list">
+            <li><a href="#contact">Push Notifications <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">WhatsApp &amp; SMS <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+            <li><a href="#contact">Email <img src={arrowSm.src} alt="" width="12" height="13" /></a></li>
+          </ul>
+          <a href="#contact" class="x-cta">Explore channels</a>
+          <div class="x-media x-media-row">
+            <img src={emoji1.src} alt="" width="32" height="32" loading="lazy" decoding="async" class="tilt-l" />
+            <img src={emoji2.src} alt="" width="32" height="32" loading="lazy" decoding="async" class="tilt-r" />
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+  const gallery = document.getElementById('template-gallery')!;
+  document.querySelectorAll<HTMLButtonElement>('.arrow-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = gallery.querySelector<HTMLElement>('.t-card')!;
+      const step = card.offsetWidth + 8;
+      gallery.scrollBy({ left: step * Number(btn.dataset.dir), behavior: 'smooth' });
+    });
+  });
+
+  // expandable cards — one open at a time
+  const cards = [...gallery.querySelectorAll<HTMLElement>('.t-card')];
+  const setOpen = (card: HTMLElement | null) => {
+    cards.forEach((c) => {
+      const open = c === card;
+      c.classList.toggle('open', open);
+      c.querySelector('.t-link')!.setAttribute('aria-expanded', String(open));
+    });
+    // Safari nudges the clipped axis when focusing the toggle
+    gallery.scrollTop = 0;
+  };
+  cards.forEach((card) => {
+    card.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('.t-link')) {
+        setOpen(card.classList.contains('open') ? null : card);
+      } else if (!target.closest('a') && !card.classList.contains('open')) {
+        setOpen(card);
+      }
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(null);
+  });
+</script>
+
+<style>
+  .library {
+    padding-bottom: 120px;
+  }
+
+  .lib-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .lib-head-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .lib-arrows {
+    display: flex;
+    gap: 8px;
+    padding-top: 8px;
+  }
+
+  .arrow-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    display: grid;
+    place-items: center;
+    transition:
+      background-color 0.25s var(--ease-out),
+      transform 0.25s var(--ease-out);
+  }
+
+  .arrow-btn:hover {
+    background: #f5f5f5;
+    transform: scale(1.08);
+  }
+
+  .arrow-btn .flip {
+    transform: scaleX(-1);
+  }
+
+  /* gallery bleeds to the right edge of the viewport, like the Figma canvas */
+  .gallery-clip {
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-left: var(--pad-x);
+  }
+
+  .gallery {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    /* explicit, or it computes to auto and Safari rubber-bands the cards
+       vertically instead of scrolling the page */
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-right: var(--pad-x);
+    overscroll-behavior-x: contain;
+    /* the scroll container clips vertically too — headroom so the hover lift
+       doesn't cut off card titles */
+    padding-top: 8px;
+    margin-top: -8px;
+  }
+
+  .gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .t-card {
+    flex: none;
+    width: 371.5px;
+    height: 496px;
+    border-radius: 8px;
+    background: #f7f6f5;
+    overflow: hidden;
+    position: relative;
+    scroll-snap-align: start;
+    transition: transform 0.4s var(--ease-out);
+    cursor: pointer;
+  }
+
+  .t-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .t-card.open {
+    cursor: auto;
+  }
+
+  .t-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .t-head h3 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.026em;
+  }
+
+  .t-head p {
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.026em;
+    color: var(--muted);
+  }
+
+  .t-link {
+    width: 32px;
+    height: 32px;
+    margin-top: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: none;
+    transition:
+      background-color 0.25s var(--ease-out),
+      transform 0.25s var(--ease-out);
+  }
+
+  .t-card:hover .t-link {
+    background: #fff;
+  }
+
+  /* + becomes × only while the card is expanded */
+  .t-card.open .t-link {
+    background: #fff;
+    transform: rotate(45deg);
+  }
+
+  .t-stage {
+    position: absolute;
+    inset: 89px 0 0 0;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+    transition:
+      filter 0.45s var(--ease-out),
+      opacity 0.45s var(--ease-out);
+  }
+
+  /* frost the artwork behind the open panel — a regular filter, because Safari
+     ignores backdrop-filter inside the card's rounded overflow-hidden box */
+  .t-card.open .t-stage {
+    filter: blur(12px);
+    opacity: 0.35;
+  }
+
+  /* expanded details panel — frosted overlay above the stage, below the header */
+  .t-expand {
+    position: absolute;
+    inset: 89px 0 0 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 20px 20px;
+    background: rgba(247, 246, 245, 0.6);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    transition:
+      opacity 0.45s var(--ease-out),
+      transform 0.45s var(--ease-out),
+      visibility 0s linear 0.45s;
+  }
+
+  .t-card.open .t-expand {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 0.45s var(--ease-out),
+      transform 0.45s var(--ease-out),
+      visibility 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .t-expand {
+      transition: none;
+    }
+  }
+
+  .x-body {
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(34, 34, 34, 0.85);
+  }
+
+  .x-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .x-links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 14px;
+    line-height: 20px;
+    transition: color 0.25s var(--ease-out);
+  }
+
+  .x-links a:hover {
+    color: var(--accent);
+  }
+
+  .x-links img {
+    opacity: 0.6;
+  }
+
+  .x-cta {
+    align-self: flex-start;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 300px;
+    padding: 10px 20px;
+    font-size: 14px;
+    line-height: 20px;
+    transition: background-color 0.25s var(--ease-out);
+  }
+
+  .x-cta:hover {
+    background: #4630e0;
+  }
+
+  .x-media {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0.9;
+  }
+
+  .x-media-row {
+    gap: 10px;
+    align-items: center;
+  }
+
+  .blob {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .blob-a {
+    width: 623px;
+    max-width: none;
+    left: 50%;
+    top: -62px;
+    transform: translateX(-9%);
+  }
+
+  .blob-b {
+    width: 1004px;
+    max-width: none;
+    left: 50%;
+    top: 120px;
+    transform: translateX(-48%) rotate(-91deg);
+  }
+
+  .blob-c {
+    width: 1030px;
+    max-width: none;
+    left: 50%;
+    top: -146px;
+    transform: translateX(-48%) rotate(150.66deg);
+  }
+
+  /* white in-app mock card */
+  .mock {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 320px;
+    background: #fff;
+    border: 1px solid var(--card-border-soft);
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+  }
+
+  .mock-gap {
+    justify-content: center;
+    gap: 28px;
+  }
+
+  .mock-left {
+    text-align: left;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+
+  .mock-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1.2;
+    color: #00152a;
+  }
+
+  .mock-title-light {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #00152a;
+  }
+
+  .mock-sub {
+    font-size: 16px;
+    line-height: 1.4;
+    color: rgba(0, 21, 42, 0.5);
+    max-width: 195px;
+    margin-inline: auto;
+  }
+
+  .mock-copy {
+    display: grid;
+    gap: 8px;
+  }
+
+  .mock-actions {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    justify-items: center;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e2ddd9;
+    color: #141414;
+    border-radius: 300px;
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 1.4;
+    min-width: 100px;
+    transition: filter 0.25s var(--ease-out);
+  }
+
+  .t-card:hover .pill {
+    filter: brightness(0.96);
+  }
+
+  .pill-wide {
+    width: 100%;
+  }
+
+  .pill-plain {
+    font-size: 16px;
+    color: #00152a;
+  }
+
+  .pill-soft {
+    background: #f0f2f6;
+    border-radius: 300px;
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #00152a;
+    white-space: nowrap;
+  }
+
+  /* inline widgets */
+  .gs-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress {
+    height: 2px;
+    background: #f0f2f6;
+    overflow: hidden;
+    border-radius: 1px;
+  }
+
+  .progress span {
+    display: block;
+    height: 100%;
+    background: #1fa265;
+    transform-origin: left;
+    animation: grow 1.2s var(--ease-out) both;
+    animation-play-state: paused;
+  }
+
+  :global(.in-view) .progress span {
+    animation-play-state: running;
+  }
+
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  .checklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 24px;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #00152a;
+  }
+
+  .checklist .done {
+    opacity: 0.5;
+  }
+
+  /* gamification */
+  .week {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  .day {
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+  }
+
+  .day i {
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: rgba(0, 21, 42, 0.5);
+  }
+
+  .day b {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1;
+    color: rgba(128, 128, 128, 0.5);
+  }
+
+  /* wheel */
+  .wheel {
+    position: relative;
+    width: 118px;
+    height: 118px;
+    animation: wheel-idle 24s linear infinite;
+  }
+
+  @keyframes wheel-idle {
+    to {
+      rotate: 360deg;
+    }
+  }
+
+  .wheel-label {
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    letter-spacing: -0.05em;
+    color: #887067;
+    opacity: 0.84;
+  }
+
+  .wheel-center {
+    position: absolute;
+    left: 40px;
+    top: 39px;
+  }
+
+  /* outbound notifications */
+  .notif {
+    position: absolute;
+    left: 50%;
+    width: 300px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    overflow: hidden;
+  }
+
+  .notif-top {
+    top: 50%;
+    transform: translate(-50%, calc(-50% - 95px));
+  }
+
+  .notif-bottom {
+    top: 50%;
+    transform: translate(-50%, calc(-50% + 76px));
+    height: 167px;
+  }
+
+  .notif-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .notif-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 12px;
+    color: #404040;
+  }
+
+  .skii {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  .notif-when {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .notif-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .notif-col {
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .notif-title {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #00152a;
+  }
+
+  .notif-sub {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #00152a;
+    opacity: 0.5;
+    margin-top: 4px;
+  }
+
+  .notif-wrap {
+    max-width: 254px;
+    margin-top: 0;
+  }
+
+  .notif-emojis {
+    display: inline-flex;
+  }
+
+  .tilt-l {
+    transform: rotate(-6.5deg);
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .tilt-r {
+    transform: rotate(9.5deg) translateX(-6px);
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .t-card:hover .tilt-l {
+    transform: rotate(-12deg) translateY(-2px);
+  }
+
+  .t-card:hover .tilt-r {
+    transform: rotate(14deg) translateX(-6px) translateY(-2px);
+  }
+
+  @media (max-width: 600px) {
+    .t-card {
+      width: min(340px, 86vw);
+    }
+  }
+</style>

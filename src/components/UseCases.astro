@@ -1,0 +1,322 @@
+---
+// Figma node 137:1748 ("section-use-cases") — lifecycle tabs + phone mock + case study
+import { Image } from 'astro:assets';
+import tooltip from '../assets/figma/uc-tooltip.svg';
+import illustration from '../assets/figma/uc-illustration.svg';
+import dot from '../assets/figma/uc-dot.svg';
+import coindcx from '../assets/figma/uc-coindcx.png';
+
+const tabs = [
+  {
+    name: 'Activation',
+    copy: 'Get users to their first value moment, fast, with guided tours, spotlights, and checklists that turn sign-ups into activated users.',
+  },
+  {
+    name: 'Adoption',
+    copy: 'Grow depth of usage with contextual nudges that surface the right feature to the right user at the right time.',
+  },
+  {
+    name: 'Conversations',
+    copy: 'Meet customers in the moment with two-way, in-product conversations that answer questions before they become churn.',
+  },
+  {
+    name: 'Feedback',
+    copy: 'Capture signal where it happens — targeted surveys and prompts that feed every future decision.',
+  },
+];
+---
+
+<section class="use-cases" id="use-cases">
+  <div class="shell">
+    <header class="section-head">
+      <p class="section-label reveal">Lifecycle Intelligence</p>
+      <h2 class="h-section reveal" style="--d:.08s">
+        Agents That Own The Entire Workflow.
+        <span class="dim">Not Just The Next Step.</span>
+      </h2>
+    </header>
+
+    <div class="uc-grid">
+      <div class="uc-tabs reveal" style="--d:.1s" id="uc-tabs">
+        {
+          tabs.map((tab, i) => (
+            <div class={`uc-tab${i === 0 ? ' active' : ''}`}>
+              <button class="uc-tab-btn" aria-expanded={i === 0 ? 'true' : 'false'}>
+                {tab.name}
+              </button>
+              <div class="uc-tab-panel">
+                <div class="uc-tab-panel-inner">
+                  <p class="uc-tab-copy">{tab.copy}</p>
+                  <a href="#contact" class="uc-explore">Explore</a>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="uc-phone reveal" style="--d:.2s">
+        <div class="uc-tooltip" style={`--tooltip: url(${JSON.stringify(tooltip.src)})`}>
+          <p class="uc-hey">Hey Joe!</p>
+          <p class="uc-msg">
+            Welcome to your homepage.<br /><br />
+            Your favourite stocks and funds are right here : )
+          </p>
+          <img src={illustration.src} alt="" class="uc-illo" loading="lazy" decoding="async" />
+          <div class="uc-tour-row">
+            <span>Restart</span>
+            <span>1 of 2</span>
+            <span class="uc-done">Done</span>
+          </div>
+        </div>
+        <img src={dot.src} alt="" class="uc-dot" width="34" height="34" loading="lazy" decoding="async" />
+      </div>
+
+      <aside class="uc-case reveal" style="--d:.3s">
+        <Image src={coindcx} alt="CoinDCX" width={236} class="uc-case-logo" />
+        <p class="uc-case-title">How CoinDCX drove a<br />30% uplift in users who trade crypto futures</p>
+        <a href="#" class="uc-read">Read More &gt;&gt;</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabEls = document.querySelectorAll<HTMLElement>('#uc-tabs .uc-tab');
+  tabEls.forEach((tab) => {
+    tab.querySelector('.uc-tab-btn')!.addEventListener('click', () => {
+      tabEls.forEach((t) => {
+        t.classList.toggle('active', t === tab);
+        t.querySelector('.uc-tab-btn')!.setAttribute('aria-expanded', t === tab ? 'true' : 'false');
+      });
+    });
+  });
+</script>
+
+<style>
+  .use-cases {
+    padding-bottom: 120px;
+  }
+
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .uc-grid {
+    display: grid;
+    grid-template-columns: 354px minmax(0, 446px) 309px;
+    justify-content: space-between;
+    align-items: end;
+    gap: 40px;
+    min-height: 495px;
+  }
+
+  /* tabs */
+  .uc-tabs {
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .uc-tab.active {
+    border-top: 2px solid transparent;
+    border-image: linear-gradient(90deg, #ff915e, rgba(237, 233, 222, 0)) 1;
+    padding-top: 16px;
+  }
+
+  .uc-tab-btn {
+    display: block;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: -0.0175em;
+    color: var(--ink);
+    text-align: left;
+    transition: opacity 0.25s var(--ease-out);
+  }
+
+  .uc-tab:not(.active) .uc-tab-btn {
+    opacity: 0.8;
+  }
+
+  .uc-tab:not(.active) .uc-tab-btn:hover {
+    opacity: 1;
+  }
+
+  .uc-tab-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s var(--ease-out);
+  }
+
+  .uc-tab.active .uc-tab-panel {
+    grid-template-rows: 1fr;
+  }
+
+  .uc-tab-panel-inner {
+    overflow: hidden;
+  }
+
+  .uc-tab-copy {
+    padding-top: 4px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .uc-explore {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    color: #090909;
+    text-decoration: underline;
+  }
+
+  /* phone */
+  .uc-phone {
+    position: relative;
+    height: 495px;
+    border: 1px solid var(--card-border-soft);
+    border-top: 0;
+    border-radius: 0 0 80px 80px;
+    overflow: hidden;
+  }
+
+  .uc-tooltip {
+    position: absolute;
+    left: 8.3%;
+    top: 54px;
+    width: 83.4%;
+    aspect-ratio: 372 / 385.6;
+    background: var(--tooltip) no-repeat center / contain;
+    animation: tooltip-bob 7s ease-in-out infinite alternate;
+  }
+
+  @keyframes tooltip-bob {
+    from {
+      transform: translateY(-3px);
+    }
+    to {
+      transform: translateY(3px);
+    }
+  }
+
+  .uc-hey {
+    position: absolute;
+    left: 4.7%;
+    top: 6.7%;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(34px, 3.5vw, 50px);
+    line-height: 1.2;
+    color: #938c8a;
+  }
+
+  .uc-msg {
+    position: absolute;
+    left: 5%;
+    top: 27%;
+    width: 57%;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #00152a;
+  }
+
+  .uc-illo {
+    position: absolute;
+    right: 3%;
+    top: 24.6%;
+    width: 34.7%;
+  }
+
+  .uc-tour-row {
+    position: absolute;
+    left: 5%;
+    right: 9%;
+    bottom: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #00152a;
+  }
+
+  .uc-done {
+    border: 0.5px solid #00152a;
+    border-radius: 2px;
+    padding: 8px 12px;
+    line-height: 1.4;
+  }
+
+  .uc-dot {
+    position: absolute;
+    left: 79px;
+    top: 436px;
+    animation: dot-pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes dot-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.25);
+      opacity: 0.75;
+    }
+  }
+
+  /* case study */
+  .uc-case {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .uc-case-logo {
+    width: 118px;
+    height: auto;
+  }
+
+  .uc-case-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: -0.006em;
+    color: rgba(9, 9, 9, 0.8);
+  }
+
+  .uc-read {
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.2px;
+    color: rgba(34, 34, 34, 0.8);
+    transition: color 0.25s var(--ease-out);
+  }
+
+  .uc-read:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 1100px) {
+    .uc-grid {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+    .uc-phone {
+      width: min(446px, 100%);
+    }
+    .uc-dot {
+      left: 17%;
+      top: 88%;
+    }
+  }
+</style>

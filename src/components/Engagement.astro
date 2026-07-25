@@ -1,0 +1,200 @@
+---
+// Figma node 137:1393 ("section-engagement") — Static Logic vs AI Decisioning
+import swirl from '../assets/figma/engagement-swirl.svg';
+
+const oldTerms = [
+  ['Segments', 'Rules', 'Broadcasts'],
+  ['A/B Tests', 'Manual Optimization'],
+];
+const newTerms = [
+  ['Individuals', 'AI Decisions', 'Conversations'],
+  ['Continuous Learning', 'Self-Optimizing'],
+];
+---
+
+<section class="engagement" id="decisioning">
+  <div class="shell">
+    <header class="section-head">
+      <p class="section-label reveal">AI Decisioning</p>
+      <h2 class="h-section reveal" style="--d:.08s">
+        Plotline decides one by one.
+        <span class="dim">Segments guess by the thousand.</span>
+      </h2>
+    </header>
+
+    <div class="cards">
+      <article class="card card-old reveal" style="--d:.1s">
+        <h3 class="card-title">Static Logic</h3>
+        <div class="card-canvas old-canvas" aria-hidden="true"></div>
+        <ul class="term-rows" role="list">
+          {oldTerms.map((row) => <li class="term-row">{row.map((t) => <span>{t}</span>)}</li>)}
+        </ul>
+      </article>
+
+      <article class="card card-new reveal" style="--d:.2s">
+        <img src={swirl.src} alt="" class="swirl" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="card-new-inner">
+          <h3 class="card-title">AI Decisioning</h3>
+          <div class="card-canvas new-canvas" aria-hidden="true"></div>
+          <ul class="term-rows" role="list">
+            {newTerms.map((row) => <li class="term-row">{row.map((t) => <span>{t}</span>)}</li>)}
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .engagement {
+    padding-block: 120px 0;
+  }
+
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 48.7%); /* 657/1350 */
+    gap: 36px;
+  }
+
+  .card {
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    min-height: 495px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 41px;
+    transition:
+      transform 0.4s var(--ease-out),
+      box-shadow 0.4s var(--ease-out);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -24px rgba(5, 2, 28, 0.25);
+  }
+
+  .card-title {
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+  }
+
+  .card-canvas {
+    flex: 1;
+    width: min(500px, 100%);
+    border-radius: 4px;
+  }
+
+  .old-canvas {
+    background: rgba(0, 0, 0, 0.12);
+    opacity: 0.1;
+  }
+
+  .term-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .term-row {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.2px;
+  }
+
+  /* dark card */
+  .card-new {
+    position: relative;
+    overflow: hidden;
+    background: var(--night);
+    padding: 0;
+    color: #fff;
+  }
+
+  .swirl {
+    position: absolute;
+    width: 170%;
+    max-width: none;
+    left: -38%;
+    top: -46%;
+    opacity: 0.9;
+    transform: rotate(-129.85deg);
+    animation: swirl-turn 120s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes swirl-turn {
+    to {
+      transform: rotate(230.15deg);
+    }
+  }
+
+  .card-new-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 40px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .new-canvas {
+    background: rgba(255, 255, 255, 0.09);
+    border: 0.5px solid rgba(237, 233, 222, 0.3);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* slow sheen across the AI panel */
+  .new-canvas::after {
+    content: '';
+    position: absolute;
+    inset: -60% -80%;
+    background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.07) 50%, transparent 58%);
+    animation: sheen 6s ease-in-out infinite;
+  }
+
+  @keyframes sheen {
+    0%,
+    20% {
+      transform: translateX(-60%);
+    }
+    60%,
+    100% {
+      transform: translateX(60%);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .engagement {
+      padding-top: 80px;
+    }
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,208 @@
+/* ---------------------------------------------------------------------------
+   Plotline landing — design tokens sourced from Figma (WIP-work-trial)
+   Figma variables: color/black #222, color/white #fff, tab-unselected #999,
+   accent #533afe, dark #05021c, dark card #19162e
+--------------------------------------------------------------------------- */
+:root {
+  --ink: #222222;
+  --ink-soft: #777777;
+  --muted: #999999;
+  --paper: #ffffff;
+  --accent: #533afe;
+  --night: #05021c;
+  --night-card: #19162e;
+  --night-tile: #211b4d;
+  --hairline: #ebebeb;
+  --card-border: rgba(153, 153, 153, 0.4);
+  --card-border-soft: rgba(128, 128, 128, 0.5);
+
+  --font-display: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+  --font-body: 'Geist Sans', 'Geist', system-ui, sans-serif;
+
+  --pad-x: clamp(20px, 3.125vw, 45px);
+  --page-max: 1440px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+}
+
+/* ------- layout ------- */
+.shell {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+
+/* ------- type ------- */
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5.55vw, 5rem);
+  line-height: 1.2;
+  letter-spacing: -0.024em;
+  margin: 0;
+}
+
+.h-section {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 3.9vw, 3.5rem);
+  line-height: 1.07;
+  letter-spacing: -0.043em;
+  margin: 0;
+}
+
+.h-section .dim {
+  display: block;
+  color: var(--ink-soft);
+}
+
+/* ------- section label chip ------- */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.2px;
+}
+
+.section-label::before {
+  content: '';
+  width: 11px;
+  height: 11px;
+  background: var(--chip, var(--accent));
+  flex: none;
+}
+
+/* ------- buttons ------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out),
+    background-color 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #4630e0;
+  box-shadow: 0 8px 24px rgba(83, 58, 254, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  border: 1px solid var(--muted);
+  color: var(--ink);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.btn-white {
+  background: #fff;
+  color: var(--ink);
+}
+
+.btn-white:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ------- scroll reveal ------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: var(--d, 0s);
+  will-change: opacity, transform;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+}
