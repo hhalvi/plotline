@@ -10,7 +10,7 @@ section-by-section.
 - Astro 5 (fully static, zero framework JS — only two tiny inline scripts: scroll-reveal + gallery/tabs)
 - Hand-written scoped CSS per component; shared tokens in `src/styles/global.css`
 - `astro:assets` (sharp) for AVIF/WebP responsive images
-- Fonts: `@fontsource-variable/space-grotesk` (display), `@fontsource/geist-sans` 400/500 (body)
+- Fonts: `@fontsource-variable/space-grotesk` (display), `@fontsource/geist-sans` 400/500/600 (body)
 - pnpm. Commands: `pnpm dev`, `pnpm build`, `pnpm preview`
 
 ## Figma → component map
@@ -21,7 +21,7 @@ Each section component maps 1:1 to a Figma node. To update a section from Figma,
 | Component                              | Figma node | Section              |
 | -------------------------------------- | ---------- | -------------------- |
 | `src/components/Nav.astro`             | `137:1338` | nav                  |
-| `src/components/Hero.astro`            | `137:1358` | hero                 |
+| `src/components/Hero.astro`            | `144:4252` | hero                 |
 | `src/components/LogoStrip.astro`       | `137:1374` | logo-strip           |
 | `src/components/Engagement.astro`      | `137:1393` | section-engagement   |
 | `src/components/ExperienceLibrary.astro` | `137:1439` | section-experience-library |
@@ -57,3 +57,12 @@ Each section component maps 1:1 to a Figma node. To update a section from Figma,
 - Icons/illustrations are exported Figma assets in `src/assets/figma/` — never hand-drawn
   replacements.
 - `hero-art.png` is shared by the hero and the enterprise CTA card (same artwork in Figma).
+- The hero is re-cut in Figma rather than edited, so its node IDs change on every pass —
+  if the mapped ID 404s, re-run `get_metadata` on frame `137:1337` and find the `hero` frame.
+- The hero decision panel (Figma `144:4420`) animates on one shared 12s timeline: every
+  keyframe animation is `var(--cycle)` long and infinite, so percentage stops stay in step.
+  Pills are placed in that timeline by `--scan` delay; only the three lock-in moments have
+  their own keyframes. The Figma file contains no motion data (`get_motion_context` is
+  empty) — the choreography lives only here, so don't drop it when re-syncing the hero.
+- Overlay UI that must scale with the artwork uses `--k` (one "design pixel",
+  `min(1px, 0.069444vw)`), so sizes can be written in the Figma's own 1440-canvas px.
