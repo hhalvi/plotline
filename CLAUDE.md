@@ -1,14 +1,14 @@
 # Plotline landing page
 
 Static landing page built with Astro, translated from the Figma file
-**WIP-work-trial** (`fileKey: 2nsH8UWS1A3y9oDF74MuMK`, page "kuchuuu", frame `137:1337`).
+**WIP-work-trial** (`fileKey: 2nsH8UWS1A3y9oDF74MuMK`), frame **`162:1563`** ("new").
 
-> **Source of truth moved.** As of 2026-07-25 the "kuchuuu" page no longer exists in
-> that file — `get_metadata` returns only a `logo` page, and every node ID in the table
-> below 404s. The live reference is now the published design:
-> **https://dimly-scrum-61448148.figma.site/** ("homepage iteration").
-> Diff against that site, not Figma, until someone restores/rebuilds the Figma page.
-> See "Parity workflow" below.
+> **Node IDs are not stable in this file.** The frame has been re-cut twice
+> (`137:1337` → `159:*` → `162:1563`), and on 2026-07-25 the whole page briefly
+> disappeared, leaving only a `logo` page behind. Always `get_metadata` on the current
+> frame before trusting the table below, and if the file is unusable, diff against the
+> published design instead: **https://dimly-scrum-61448148.figma.site/**
+> ("homepage iteration"), which tracks the same frame. See "Parity workflow" below.
 
 ## Stack
 
@@ -23,15 +23,20 @@ Static landing page built with Astro, translated from the Figma file
 Each section component maps 1:1 to a Figma node. To update a section from Figma, call
 `get_design_context` (Figma MCP) with the node ID below and adapt only that component.
 
-| Component                              | Figma node | Section              |
-| -------------------------------------- | ---------- | -------------------- |
-| `src/components/Nav.astro`             | `137:1338` | nav                  |
-| `src/components/Hero.astro`            | `144:4252` | hero                 |
-| `src/components/LogoStrip.astro`       | `137:1374` | logo-strip           |
-| `src/components/Engagement.astro`      | `159:524`  | section-engagement   |
-| `src/components/ExperienceLibrary.astro` | `137:1439` | section-experience-library |
-| `src/components/UseCases.astro`        | `137:1748` | section-use-cases    |
-| `src/components/Enterprise.astro`      | `137:1840` | section-enterprise   |
+As of 2026-07-25, under frame `162:1563` (total height 5451.74):
+
+| Component                                | Figma node | Section                    | y / height     |
+| ---------------------------------------- | ---------- | -------------------------- | -------------- |
+| `src/components/Nav.astro`               | `162:1564` | nav                        | 0 / 74         |
+| `src/components/Hero.astro`              | `162:1584` | hero                       | 74 / 955       |
+| `src/components/LogoStrip.astro`         | `162:1746` | logo-strip                 | 1029 / 116     |
+| `src/components/Engagement.astro`        | `162:1765` | section-engagement         | 1145 / 955     |
+| `src/components/ExperienceLibrary.astro` | `162:1893` | section-experience-library | 2100 / 955.74  |
+| `src/components/UseCases.astro`          | `162:2202` | section-use-cases          | 3055.74 / 835  |
+| `src/components/Enterprise.astro`        | `162:2294` | section-enterprise         | 3890.74 / 1561 |
+
+The y/height column is the fastest regression check going: measure the rendered
+sections and compare. The build currently matches every row within ~2px.
 
 ## Parity workflow ("match the published design")
 
