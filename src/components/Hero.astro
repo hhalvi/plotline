@@ -1,9 +1,39 @@
 ---
-// Figma node 137:1358 ("hero")
+// Figma node 144:4252 ("hero") — decision panel is 144:4420, signal cards are 144:4560
 import { Picture, Image } from 'astro:assets';
 import heroArt from '../assets/figma/hero-art.png';
 import heroPortrait from '../assets/figma/hero-portrait.png';
 import heroMask from '../assets/figma/hero-mask.svg';
+import nudgeArt from '../assets/figma/hero-nudge-art.svg';
+import liveDot from '../assets/figma/hero-live-dot.svg';
+
+/* The whole hero demo runs on one shared timeline: every animation below is
+   `--cycle` long and infinite, so their percentage keyframes stay in lockstep.
+   Pills are positioned in that timeline by delay (`--scan`) rather than by
+   bespoke keyframes; only the three "lock in" moments need their own.  */
+const CYCLE = 12; // seconds — keep in sync with --cycle
+const SLOT = 0.035; // fraction of the cycle each option is considered for
+
+/* the signal that drives the decision sits at full strength; the other two are
+   dimmed to 70%, exactly as in the design */
+const signals = [
+  { text: 'Uses iOS and Web apps', dim: true },
+  { text: 'Approaching Free Tier Limits', dim: false },
+  { text: 'Current LTV: 200$', dim: true },
+];
+
+const decisions = [
+  { label: 'Call to Action', scanFrom: 0.16, options: ['Gamified', 'Direct', 'Exploratory'], chosen: 1 },
+  { label: 'Channel', scanFrom: 0.29, options: ['Product Nudge', 'SMS', 'E mail'], chosen: 0 },
+  { label: 'Best Time', scanFrom: 0.42, options: ['11:00', '12:00', '20:00', '21:30'], chosen: 2 },
+];
+
+const scanAt = (row: (typeof decisions)[number], i: number) =>
+  `${((row.scanFrom + i * SLOT) * CYCLE).toFixed(2)}s`;
+
+const panelLabel =
+  "Plotline's AI marketer reads Henry's signals — uses iOS and web, 200 dollar lifetime value, " +
+  'approaching free tier limits — and picks a direct product nudge at 20:00.';
 ---
 
 <section class="hero">
@@ -44,7 +74,53 @@ import heroMask from '../assets/figma/hero-mask.svg';
           fetchpriority="high"
         />
         <div class="hero-art-tint" aria-hidden="true"></div>
-        <div class="hero-glass" aria-hidden="true"></div>
+      </div>
+
+      <div class="hero-signals" aria-hidden="true">
+        {
+          signals.map((s, i) => (
+            <span class="signal" style={`--i:${i}; --o:${s.dim ? 0.7 : 1}`}>{s.text}</span>
+          ))
+        }
+      </div>
+
+      <div class="hero-panel" role="img" aria-label={panelLabel}>
+        <div class="panel-decide">
+          <p class="panel-head">
+            <img src={liveDot.src} alt="" width="8" height="8" class="live-dot" />
+            <span>Henry&rsquo;s Marketer</span>
+          </p>
+
+          {
+            decisions.map((row, r) => (
+              <div class={`decision row-${r + 1}`}>
+                <p class="decision-label">{row.label}</p>
+                <div class="pill-row">
+                  {row.options.map((opt, i) => (
+                    <span
+                      class={`pill${i === row.chosen ? ' is-chosen' : ''}`}
+                      style={`--scan:${scanAt(row, i)}`}
+                    >
+                      {opt}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="panel-result">
+          <img src={nudgeArt.src} alt="" width="61" height="65" class="result-art" />
+          <div class="result-copy">
+            <p class="result-title">You&rsquo;ve almost reached your free plan limit.</p>
+            <p class="result-sub">Unlock advanced tools and continue without limits.</p>
+          </div>
+          <div class="result-actions">
+            <span class="result-cta">Upgrade</span>
+            <span class="result-back">Go Back</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -78,6 +154,13 @@ import heroMask from '../assets/figma/hero-mask.svg';
     position: relative;
     margin-top: 48px;
     aspect-ratio: 1350 / 505;
+
+    /* one "design pixel", so the overlay UI scales with the canvas exactly the
+       way the artwork does (the shell is a fixed 93.75vw until it caps at 1440) */
+    --k: min(1px, 0.069444vw);
+    --cycle: 12s;
+    --pill-fill: rgba(241, 241, 236, 0.2);
+    --pill-ink: #00152a;
   }
 
   .hero-portrait {
@@ -100,7 +183,8 @@ import heroMask from '../assets/figma/hero-mask.svg';
     -webkit-mask-repeat: no-repeat;
   }
 
-  .hero-art :global(img) {
+  /* scoped to the artwork itself — the panel's own images live in here too */
+  .hero-art :global(picture img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -113,15 +197,67 @@ import heroMask from '../assets/figma/hero-mask.svg';
     background: linear-gradient(-42deg, rgba(83, 58, 254, 0.55) -18%, rgba(83, 58, 254, 0) 38%);
   }
 
-  .hero-glass {
+  /* ---------- signals read off the customer ---------- */
+  .hero-signals {
     position: absolute;
+    left: 3.67%; /* 49.5/1350 */
+    top: 49.11%; /* 248/505 */
+    width: 18.44%; /* 249/1350 */
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--k) * 12);
+  }
+
+  .signal {
+    opacity: var(--o);
+    background: #fff;
+    border: calc(var(--k) * 1) dashed #d0cfd1;
+    border-radius: calc(var(--k) * 4);
+    padding: calc(var(--k) * 12) calc(var(--k) * 20);
+    font-size: calc(var(--k) * 16);
+    line-height: 1.4;
+    color: var(--pill-ink);
+    white-space: nowrap;
+    animation: signal-in var(--cycle) linear infinite;
+    animation-delay: calc(var(--i) * 0.36s);
+  }
+
+  @keyframes signal-in {
+    0%,
+    2% {
+      opacity: 0;
+      transform: translateX(calc(var(--k) * -14));
+    }
+    6%,
+    88% {
+      opacity: var(--o);
+      transform: translateX(0);
+    }
+    93%,
+    100% {
+      opacity: 0;
+      transform: translateX(calc(var(--k) * -6));
+    }
+  }
+
+  /* ---------- the decision panel ---------- */
+  .hero-panel {
+    position: absolute;
+    left: 36.74%; /* 496/1350 */
     top: 50%;
-    left: 25.35%; /* (496-206)/1144 */
-    width: 63.8%; /* 730/1144 */
+    width: 54.07%; /* 730/1350 */
     aspect-ratio: 730 / 400;
+    z-index: 2;
     transform: translateY(-50%);
-    border-radius: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    gap: calc(var(--k) * 36);
+    padding: calc(var(--k) * 30);
+    overflow: hidden;
+    border-radius: calc(var(--k) * 12);
+    border: calc(var(--k) * 2) solid rgba(255, 255, 255, 0.6);
     background: rgba(255, 255, 255, 0.21);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -137,6 +273,359 @@ import heroMask from '../assets/figma/hero-mask.svg';
     }
   }
 
+  /* a sheen sweeps the panel as it starts evaluating */
+  .hero-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 62%
+    );
+    transform: translateX(-100%);
+    animation: panel-sheen var(--cycle) linear infinite;
+  }
+
+  @keyframes panel-sheen {
+    0%,
+    13% {
+      transform: translateX(-100%);
+    }
+    25%,
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .panel-decide {
+    flex: 1;
+    min-width: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--k) * 26);
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--k) * 8);
+    font-weight: 600;
+    font-size: calc(var(--k) * 20);
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .live-dot {
+    width: calc(var(--k) * 8);
+    height: calc(var(--k) * 8);
+    flex: none;
+    animation: live-dot 2.4s ease-in-out infinite;
+  }
+
+  @keyframes live-dot {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.4);
+      opacity: 0.65;
+    }
+  }
+
+  .decision {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--k) * 12);
+  }
+
+  .decision-label {
+    font-size: calc(var(--k) * 20);
+    line-height: 1.4;
+    color: #f1f1ec;
+    white-space: nowrap;
+  }
+
+  .pill-row {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--k) * 14);
+  }
+
+  .pill {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: calc(var(--k) * 1) dashed rgba(255, 255, 255, 0.75);
+    border-radius: calc(var(--k) * 300);
+    height: calc(var(--k) * 38);
+    padding-inline: calc(var(--k) * 14);
+    font-size: calc(var(--k) * 16);
+    line-height: 1.4;
+    color: #fff;
+    white-space: nowrap;
+    /* every pill gets the same "considering" flash, placed in the shared
+       timeline by its own delay */
+    animation: pill-scan var(--cycle) linear var(--scan) infinite;
+  }
+
+  /* resting state = the chosen options, so a reduced-motion or paused hero
+     still shows the decision the design makes. Selection reads as a solid
+     border plus a faint fill — the label stays white either way. */
+  .pill.is-chosen {
+    background: var(--pill-fill);
+    border-style: solid;
+  }
+
+  @keyframes pill-scan {
+    0%,
+    3.5%,
+    100% {
+      border-color: rgba(255, 255, 255, 0.75);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+    1.2% {
+      border-color: #fff;
+      box-shadow: 0 0 0 calc(var(--k) * 3) rgba(255, 255, 255, 0.28);
+    }
+  }
+
+  /* …and the chosen pill locks in once its row has been scanned */
+  .row-1 .is-chosen {
+    animation:
+      pill-scan var(--cycle) linear var(--scan) infinite,
+      lock-1 var(--cycle) linear infinite;
+  }
+  .row-2 .is-chosen {
+    animation:
+      pill-scan var(--cycle) linear var(--scan) infinite,
+      lock-2 var(--cycle) linear infinite;
+  }
+  .row-3 .is-chosen {
+    animation:
+      pill-scan var(--cycle) linear var(--scan) infinite,
+      lock-3 var(--cycle) linear infinite;
+  }
+
+  @keyframes lock-1 {
+    0%,
+    27% {
+      background: transparent;
+      border-style: dashed;
+      transform: none;
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    29% {
+      background: var(--pill-fill);
+      border-style: solid;
+      transform: scale(1.07);
+    }
+    32%,
+    88% {
+      background: var(--pill-fill);
+      border-style: solid;
+      transform: scale(1);
+    }
+    93%,
+    100% {
+      background: transparent;
+      border-style: dashed;
+      transform: none;
+    }
+  }
+
+  @keyframes lock-2 {
+    0%,
+    40% {
+      background: transparent;
+      border-style: dashed;
+      transform: none;
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    42% {
+      background: var(--pill-fill);
+      border-style: solid;
+      transform: scale(1.07);
+    }
+    45%,
+    88% {
+      background: var(--pill-fill);
+      border-style: solid;
+      transform: scale(1);
+    }
+    93%,
+    100% {
+      background: transparent;
+      border-style: dashed;
+      transform: none;
+    }
+  }
+
+  @keyframes lock-3 {
+    0%,
+    57% {
+      background: transparent;
+      border-style: dashed;
+      transform: none;
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    59% {
+      background: var(--pill-fill);
+      border-style: solid;
+      transform: scale(1.07);
+    }
+    62%,
+    88% {
+      background: var(--pill-fill);
+      border-style: solid;
+      transform: scale(1);
+    }
+    93%,
+    100% {
+      background: transparent;
+      border-style: dashed;
+      transform: none;
+    }
+  }
+
+  /* ---------- the action that comes out of it ---------- */
+  .panel-result {
+    flex: none;
+    align-self: center;
+    width: calc(var(--k) * 280);
+    height: calc(var(--k) * 340);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    padding: calc(var(--k) * 28);
+    background: #fff;
+    border: calc(var(--k) * 1) solid var(--card-border-soft);
+    border-radius: calc(var(--k) * 12);
+    animation: result-in var(--cycle) linear infinite;
+  }
+
+  @keyframes result-in {
+    0%,
+    60% {
+      opacity: 0;
+      transform: translateX(calc(var(--k) * 16)) scale(0.96);
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    67%,
+    88% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+    93%,
+    100% {
+      opacity: 0;
+      transform: translateX(0) scale(0.98);
+    }
+  }
+
+  .result-art {
+    width: calc(var(--k) * 60.83);
+    height: calc(var(--k) * 65);
+    flex: none;
+  }
+
+  .result-copy {
+    display: grid;
+    gap: calc(var(--k) * 4);
+  }
+
+  .result-title {
+    font-family: var(--font-display);
+    font-size: calc(var(--k) * 20);
+    line-height: 1.2;
+    color: var(--pill-ink);
+  }
+
+  .result-sub {
+    max-width: calc(var(--k) * 209);
+    margin-inline: auto;
+    font-size: calc(var(--k) * 14);
+    line-height: 1.4;
+    color: rgba(0, 21, 42, 0.5);
+  }
+
+  .result-actions {
+    display: grid;
+    gap: calc(var(--k) * 4);
+    width: 100%;
+  }
+
+  .result-cta {
+    background: #e2ddd9;
+    border-radius: calc(var(--k) * 300);
+    padding: calc(var(--k) * 8) calc(var(--k) * 12);
+    font-size: calc(var(--k) * 16);
+    line-height: 1.4;
+    color: var(--pill-ink);
+  }
+
+  .result-back {
+    padding: calc(var(--k) * 8) calc(var(--k) * 12);
+    font-size: calc(var(--k) * 16);
+    line-height: 1.4;
+    color: #938c8a;
+  }
+
+  /* Hold the sequence until the hero is revealed, so it always starts from the
+     top — same pattern the template gallery uses for its progress bar. */
+  .hero-media .signal,
+  .hero-media .pill,
+  .hero-media .live-dot,
+  .hero-media .panel-result,
+  .hero-media .hero-panel::after {
+    animation-play-state: paused;
+  }
+
+  .hero-media:global(.in-view) .signal,
+  .hero-media:global(.in-view) .pill,
+  .hero-media:global(.in-view) .live-dot,
+  .hero-media:global(.in-view) .panel-result,
+  .hero-media:global(.in-view) .hero-panel::after {
+    animation-play-state: running;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* no cycling — rest on the design's final state */
+    .hero-media .signal,
+    .hero-media .pill,
+    .hero-media .live-dot,
+    .hero-media .panel-result,
+    .hero-media .hero-panel,
+    .hero-media .hero-panel::after {
+      animation: none;
+    }
+    .hero-media .hero-panel {
+      transform: translateY(-50%);
+    }
+  }
+
+  @media (max-width: 900px) {
+    /* the result card no longer fits beside the rows */
+    .panel-result {
+      display: none;
+    }
+    .hero-panel {
+      aspect-ratio: 430 / 400;
+      width: 31.85%; /* 430/1350 */
+    }
+  }
+
   @media (max-width: 720px) {
     .hero-content :global(br) {
       display: none;
@@ -145,8 +634,10 @@ import heroMask from '../assets/figma/hero-mask.svg';
       aspect-ratio: auto;
       display: grid;
       gap: 16px;
+      --k: 1px;
     }
-    .hero-portrait {
+    .hero-portrait,
+    .hero-signals {
       display: none;
     }
     .hero-art {
@@ -157,9 +648,26 @@ import heroMask from '../assets/figma/hero-mask.svg';
       border-radius: 12px;
       overflow: hidden;
     }
-    .hero-glass {
-      left: 10%;
-      width: 80%;
+    /* the panel drops out of the collage and becomes a card of its own */
+    .hero-panel {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: 100%;
+      aspect-ratio: auto;
+      transform: none;
+      animation: none;
+      background: var(--night-card);
+      border-color: rgba(255, 255, 255, 0.15);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      padding: 24px;
+    }
+    .panel-decide {
+      gap: 20px;
+    }
+    .pill-row {
+      flex-wrap: wrap;
     }
   }
 </style>
