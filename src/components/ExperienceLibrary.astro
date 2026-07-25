@@ -596,12 +596,16 @@ const wheelLabels = [
     transform: translateX(-9%);
   }
 
+  /* 623 is the asset's own width — the 1004 this used to carry is Figma's
+     bounding box for the shape *after* the -91deg rotation, which blew the blob
+     up to 1600px tall and pushed it clear of the card, so it rendered as nothing
+     on the two cards using this class. */
   .blob-b {
-    width: 1004px;
+    width: 623px;
     max-width: none;
     left: 50%;
-    top: 120px;
-    transform: translateX(-48%) rotate(-91deg);
+    top: 140px;
+    transform: translateX(6%) rotate(-91deg);
   }
 
   .blob-c {
