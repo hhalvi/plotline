@@ -137,7 +137,7 @@ const panelLabel =
   .hero-content {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px; /* heading 192 → subheading 204 on the Figma canvas */
     align-items: flex-start;
   }
 
@@ -150,6 +150,7 @@ const panelLabel =
   .hero-ctas {
     display: flex;
     gap: 16px;
+    margin-top: 12px; /* 24px below the subheading, per Figma */
   }
 
   /* media collage — 1350x505 in the 1440 design */
@@ -197,7 +198,9 @@ const panelLabel =
   .hero-art-tint {
     position: absolute;
     inset: 0;
-    background: linear-gradient(-42deg, rgba(83, 58, 254, 0.55) -18%, rgba(83, 58, 254, 0) 38%);
+    /* the painting is carried as a terracotta duotone, deepening to the right —
+       measured off the published design */
+    background: linear-gradient(to right, rgba(160, 80, 64, 0.58) 0%, rgba(160, 80, 80, 0.79) 100%);
   }
 
   /* ---------- signals read off the customer ---------- */

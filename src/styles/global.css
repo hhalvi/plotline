@@ -8,7 +8,9 @@
   --ink-soft: #777777;
   --muted: #999999;
   --paper: #ffffff;
+  --paper-warm: #f7f6f5; /* the engagement section's tinted band */
   --accent: #533afe;
+  --accent-lift: #5f43fe; /* the logomark watermark on accent-filled cards */
   --night: #05021c;
   --night-card: #19162e;
   --night-tile: #211b4d;
@@ -124,11 +126,13 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 24px;
+  /* every button in the Figma file is 42 tall × 24 padded, border included */
+  height: 42px;
+  padding-inline: 24px;
   border-radius: 4px;
   font-weight: 500;
   font-size: 14px;
-  line-height: 1;
+  line-height: 18px;
   white-space: nowrap;
   transition:
     transform 0.25s var(--ease-out),

@@ -1,6 +1,46 @@
 ---
-// Figma node 137:1393 ("section-engagement") — Static Logic vs AI Decisioning
-import swirl from '../assets/figma/engagement-swirl.svg';
+// Figma node 159:524 ("section-engagement") — Static Logic vs AI Decisioning
+// The two card interiors (159:538 and 159:595) are 500×277 design-pixel stages:
+// every offset below is written in the Figma 1440-canvas's own px and scaled by
+// `--u`, one design pixel derived from the card's own width (see the styles).
+import { Image, Picture } from 'astro:assets';
+import tileMask from '../assets/figma/eng-tile-mask.svg'; // the Plotline "P" logomark
+import tileArt from '../assets/figma/hero-art.png'; // same artwork as the hero in the source file
+import face1 from '../assets/figma/eng-face-1.png';
+import face2 from '../assets/figma/eng-face-2.png';
+import face3 from '../assets/figma/eng-face-3.png';
+import face4 from '../assets/figma/eng-face-4.png';
+import face5 from '../assets/figma/eng-face-5.png';
+import face6 from '../assets/figma/eng-face-6.png';
+import face7 from '../assets/figma/eng-face-7.png';
+
+// Static Logic — customer signals the rule engine never acts on, in Figma paint
+// order (bottom-most first). `fw`/`fh`/`fy` crop each cut-out portrait to the head.
+const tall = { fw: 38.346, fh: 38.346, fx: 0.71, fy: 4.97 };
+const wide = { fw: 32.665, fh: 34.795, fx: 0, fy: 3.2 };
+
+const signals = [
+  { x: 134.5, y: 215.266, text: 'Reached 95% of free plan', face: face1, bg: '#a4a4a7', ...tall },
+  { x: 43.5, y: 163.5, text: 'Awaiting Payday', face: face2, bg: '#efefef', ...wide },
+  { x: 224.468, y: 163.5, text: 'Cancelled checkout twice', face: face3, bg: '#a4a4a7', ...tall },
+  { x: 26.5, y: 59.968, text: 'Ignored the last 2 emails', face: face4, bg: '#a4a4a7', ...tall },
+  { x: 261.468, y: 59.968, text: 'Visited pricing 4 times', face: face5, bg: '#efefef', ...wide },
+  { x: 1.5, y: 111.734, text: 'Asked about platform fee', face: face6, bg: '#a4a4a7', ...tall },
+  { x: 242.468, y: 111.734, text: 'Completed onboarding today', face: face7, bg: '#d4d4d4', ...wide },
+];
+
+// AI Decisioning — one decision per user, in paint order. Every marketer chip
+// carries the same navy fill; the pills overhang the 500-wide stage on purpose.
+const decisions = [
+  { x: -5.5, y: 165.085, who: 'JAMES’S MARKETER', text: 'Email on Friday at 11:30 pm' },
+  { x: 193.426, y: 165.085, who: 'SMITH’S MARKETER', text: 'SMS next week at 11:00PM' },
+  { x: -25.5, y: 124.724, who: 'HENRY’S MARKETER', text: 'SMS tonight' },
+  { x: 188.426, y: 124.724, who: 'ANNA’S MARKETER', text: 'Roll out new offer tomorrow' },
+  { x: 53.963, y: 205, who: 'JOHN’S MARKETER', text: 'Send Product video at the end of week 1' },
+  { x: 58.5, y: 44, who: 'JOHN’S MARKETER', text: 'Email today at 7:30 during active period' },
+  { x: 31, y: 84.362, who: 'JOHN’S MARKETER', text: 'Hold, frequ' },
+  { x: 225.926, y: 84.362, who: 'JESSICA’S MARKETER', text: 'Hold till next week' },
+];
 
 const oldTerms = [
   ['Segments', 'Rules', 'Broadcasts'],
@@ -25,17 +65,73 @@ const newTerms = [
     <div class="cards">
       <article class="card card-old reveal" style="--d:.1s">
         <h3 class="card-title">Static Logic</h3>
-        <div class="card-canvas old-canvas" aria-hidden="true"></div>
+
+        <div class="card-canvas" aria-hidden="true">
+          <div class="stage">
+            {
+              signals.map((s) => (
+                <div
+                  class="sig-pill"
+                  style={`--x:${s.x};--y:${s.y};--bg:${s.bg};--fw:${s.fw};--fh:${s.fh};--fx:${s.fx};--fy:${s.fy}`}
+                >
+                  <span class="sig-face">
+                    <Image src={s.face} alt="" width={s.face.width} height={s.face.height} loading="lazy" />
+                  </span>
+                  <span class="sig-text">{s.text}</span>
+                </div>
+              ))
+            }
+
+            <div class="rule-pill" style="--x:89.5;--y:6">
+              <span class="rule-chip">RULE BASED CAMPAIGN</span>
+              <span class="rule-text">Upgrade today &amp; save 20%</span>
+            </div>
+
+            <div class="stage-fade"></div>
+          </div>
+        </div>
+
         <ul class="term-rows" role="list">
           {oldTerms.map((row) => <li class="term-row">{row.map((t) => <span>{t}</span>)}</li>)}
         </ul>
       </article>
 
       <article class="card card-new reveal" style="--d:.2s">
-        <img src={swirl.src} alt="" class="swirl" aria-hidden="true" loading="lazy" decoding="async" />
+        <span class="card-wash" style={`--mask:url(${JSON.stringify(tileMask.src)})`} aria-hidden="true"></span>
         <div class="card-new-inner">
           <h3 class="card-title">AI Decisioning</h3>
-          <div class="card-canvas new-canvas" aria-hidden="true"></div>
+
+          <div class="card-canvas" aria-hidden="true">
+            <div class="stage">
+              {
+                decisions.map((d, i) => (
+                  <div class="dec-pill" style={`--x:${d.x};--y:${d.y};--i:${i}`}>
+                    <span class="dec-chip">{d.who}</span>
+                    <span class="dec-text">{d.text}</span>
+                  </div>
+                ))
+              }
+
+              <div class="tile">
+                <div class="tile-art" style={`--mask:url(${JSON.stringify(tileMask.src)})`}>
+                  <div class="tile-art-inner">
+                    <Picture
+                      src={tileArt}
+                      alt=""
+                      widths={[600, 1200]}
+                      sizes="600px"
+                      formats={['avif']}
+                      fallbackFormat="webp"
+                      loading="lazy"
+                    />
+                    <span class="tile-tint"></span>
+                  </div>
+                </div>
+                <p class="tile-title">134,118 AI Marketers<br />One Per User</p>
+              </div>
+            </div>
+          </div>
+
           <ul class="term-rows" role="list">
             {newTerms.map((row) => <li class="term-row">{row.map((t) => <span>{t}</span>)}</li>)}
           </ul>
@@ -47,13 +143,14 @@ const newTerms = [
 
 <style>
   .engagement {
-    padding-block: 120px 0;
+    padding-block: 120px; /* the section's own 955px-tall tinted band */
+    background: var(--paper-warm);
   }
 
   .section-head {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 30px; /* label box 22 → heading box 52 in Figma */
     margin-bottom: 48px;
   }
 
@@ -63,10 +160,19 @@ const newTerms = [
     gap: 36px;
   }
 
+  /* `cqw` resolves against the container's content box — 575 on the 1440 canvas
+     for both cards (657 card − 41 padding each side). The dark card pads on its
+     inner wrapper instead, so that wrapper is the container there. */
+  .card,
+  .card-new-inner {
+    container-type: inline-size;
+  }
+
   .card {
+    /* pills deliberately overhang the 500-wide stage, so the card is what clips */
+    overflow: hidden;
     border: 1px solid var(--card-border);
     border-radius: 8px;
-    min-height: 495px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -91,15 +197,23 @@ const newTerms = [
     letter-spacing: -0.02em;
   }
 
+  /* ---------- the 500×277 stage both cards share ---------- */
   .card-canvas {
-    flex: 1;
-    width: min(500px, 100%);
-    border-radius: 4px;
+    /* one design pixel: the 500-wide stage sits in a 575-wide content box */
+    --u: clamp(0.66px, 100cqw / 575, 1.1px);
+    position: relative;
+    width: 100%;
+    max-width: calc(var(--u) * 500);
+    height: calc(var(--u) * 277);
   }
 
-  .old-canvas {
-    background: rgba(0, 0, 0, 0.12);
-    opacity: 0.1;
+  .stage {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: calc(var(--u) * 500);
+    height: calc(var(--u) * 277);
+    transform: translateX(-50%);
   }
 
   .term-rows {
@@ -108,7 +222,7 @@ const newTerms = [
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     align-items: center;
   }
 
@@ -122,31 +236,122 @@ const newTerms = [
     letter-spacing: 0.2px;
   }
 
-  /* dark card */
+  /* ---------- Static Logic: signals the rules never read ---------- */
+  .sig-pill,
+  .rule-pill,
+  .dec-pill {
+    position: absolute;
+    left: calc(var(--u) * var(--x));
+    top: calc(var(--u) * var(--y));
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 8.521);
+    white-space: nowrap;
+  }
+
+  .sig-pill {
+    padding: calc(var(--u) * 5.681) calc(var(--u) * 8.521);
+    background: #fff;
+    border: 0.5px solid var(--card-border-soft);
+    border-radius: calc(var(--u) * 400);
+  }
+
+  .sig-face {
+    position: relative;
+    flex: none;
+    width: calc(var(--u) * 28.404);
+    height: calc(var(--u) * 28.404);
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .sig-face :global(img) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(var(--u) * var(--fw));
+    height: calc(var(--u) * var(--fh));
+    max-width: none;
+    transform: translate(-50%, -50%) translate(calc(var(--u) * var(--fx)), calc(var(--u) * var(--fy)));
+  }
+
+  .sig-text,
+  .rule-text,
+  .dec-text {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: calc(var(--u) * 14.202);
+    line-height: 1.2;
+    color: #00152a;
+  }
+
+  .rule-pill {
+    height: calc(var(--u) * 39.766);
+    padding: calc(var(--u) * 11.362);
+    background: #ffe5cf;
+    border: 0.5px solid #ff7d00;
+    border-radius: calc(var(--u) * 4);
+  }
+
+  .rule-chip {
+    padding: calc(var(--u) * 2.84) calc(var(--u) * 5.681);
+    background: #ffe5cf;
+    border: 0.5px solid #ff7d00;
+    border-radius: calc(var(--u) * 28.404);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: calc(var(--u) * 8.521);
+    line-height: 1.2;
+    color: #00152a;
+  }
+
+  /* the pile of individuals fades out under the campaign that ignores them */
+  .stage-fade {
+    position: absolute;
+    left: 0;
+    bottom: calc(var(--u) * 5);
+    width: 100%;
+    height: calc(var(--u) * 188);
+    background: linear-gradient(180deg, rgba(247, 246, 245, 0), var(--paper-warm));
+    pointer-events: none;
+  }
+
+  /* ---------- dark card ---------- */
   .card-new {
     position: relative;
     overflow: hidden;
-    background: var(--night);
+    background: var(--accent);
+    border-color: transparent;
     padding: 0;
     color: #fff;
   }
 
-  .swirl {
+  /* an oversized Plotline logomark washed a shade lighter over the accent fill */
+  .card-wash {
+    --cu: calc(100cqw / 657); /* one design px against the card, which pads on its inner wrapper */
     position: absolute;
-    width: 170%;
-    max-width: none;
-    left: -38%;
-    top: -46%;
-    opacity: 0.9;
-    transform: rotate(-129.85deg);
-    animation: swirl-turn 120s linear infinite;
+    inset: 0;
+    overflow: hidden;
     pointer-events: none;
   }
 
-  @keyframes swirl-turn {
-    to {
-      transform: rotate(230.15deg);
-    }
+  .card-wash::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--cu) * 135);
+    top: calc(var(--cu) * -105);
+    width: calc(var(--cu) * 683);
+    height: calc(var(--cu) * 1731);
+    transform-origin: 0 0;
+    transform: rotate(12.25deg);
+    background: var(--accent-lift);
+    mask-image: var(--mask);
+    -webkit-mask-image: var(--mask);
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
   }
 
   .card-new-inner {
@@ -155,46 +360,143 @@ const newTerms = [
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    padding: 40px;
+    padding: 41px;
     width: 100%;
     height: 100%;
   }
 
-  .new-canvas {
-    background: rgba(255, 255, 255, 0.09);
-    border: 0.5px solid rgba(237, 233, 222, 0.3);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    position: relative;
-    overflow: hidden;
+  /* ---------- AI Decisioning: one decision per user ---------- */
+  .dec-pill {
+    padding: calc(var(--u) * 5.681) calc(var(--u) * 8.521);
+    border: 0.5px solid var(--card-border-soft);
+    border-radius: calc(var(--u) * 400);
   }
 
-  /* slow sheen across the AI panel */
-  .new-canvas::after {
-    content: '';
+  .dec-chip {
+    padding: calc(var(--u) * 2.84) calc(var(--u) * 5.681);
+    background: #011e54;
+    border-radius: calc(var(--u) * 28.404);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: calc(var(--u) * 8.521);
+    line-height: 1.2;
+    color: #a4a4a7;
+  }
+
+  .dec-text {
+    color: #fff;
+    opacity: 0.6;
+  }
+
+  .tile {
     position: absolute;
-    inset: -60% -80%;
-    background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.07) 50%, transparent 58%);
-    animation: sheen 6s ease-in-out infinite;
+    left: calc(var(--u) * 169.5);
+    top: calc(var(--u) * 59);
+    width: calc(var(--u) * 160);
+    height: calc(var(--u) * 160);
+    background: var(--night);
+    border-radius: calc(var(--u) * 4);
+    overflow: hidden;
+    box-shadow: calc(var(--u) * 10) calc(var(--u) * 10) calc(var(--u) * 40) calc(var(--u) * 10)
+      rgba(5, 2, 28, 0.2);
   }
 
-  @keyframes sheen {
-    0%,
-    20% {
-      transform: translateX(-60%);
+  /* The artwork is masked by the Plotline "P", which Figma places rotated −31°
+     at its natural 235.929×375.977 size — a rotation the CSS export flattens
+     away, so it is restored here and undone again on the inner layer. */
+  .tile-art {
+    position: absolute;
+    left: calc(var(--u) * 6);
+    top: calc(var(--u) * 110);
+    width: calc(var(--u) * 235.929);
+    height: calc(var(--u) * 375.977);
+    transform-origin: 0 0;
+    transform: rotate(-31deg);
+    mask-image: var(--mask);
+    -webkit-mask-image: var(--mask);
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+  }
+
+  /* counter-rotated about the same point, so the painting itself stays upright
+     at its Figma spot: 566×308 at (−159, −128) in the tile */
+  .tile-art-inner {
+    position: absolute;
+    left: calc(var(--u) * -165);
+    top: calc(var(--u) * -238);
+    width: calc(var(--u) * 566);
+    height: calc(var(--u) * 308);
+    transform-origin: calc(var(--u) * 165) calc(var(--u) * 238);
+    transform: rotate(31deg);
+  }
+
+  .tile-art :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tile-tint {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      17.698deg,
+      rgba(83, 58, 254, 0.5) 18.962%,
+      rgba(255, 73, 44, 0.5) 50.348%,
+      rgba(83, 58, 254, 0) 74.457%
+    );
+  }
+
+  .tile-title {
+    position: absolute;
+    left: calc(var(--u) * 12);
+    top: calc(var(--u) * 13);
+    width: calc(var(--u) * 140);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: calc(var(--u) * 14);
+    line-height: 1.2;
+    color: #fff;
+  }
+
+  /* decisions land one after another; the static card stays still on purpose */
+  .card-new.in-view .dec-pill {
+    animation: dec-in 0.55s var(--ease-out) both;
+    animation-delay: calc(0.2s + var(--i) * 0.07s);
+  }
+
+  .card-new.in-view .tile {
+    animation: tile-in 0.6s var(--ease-out) both;
+    animation-delay: 0.82s;
+  }
+
+  @keyframes dec-in {
+    from {
+      opacity: 0;
+      transform: translateY(calc(var(--u) * 8));
     }
-    60%,
-    100% {
-      transform: translateX(60%);
+  }
+
+  @keyframes tile-in {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+  }
+
+  /* side-by-side only while each card still has room for the 500-wide stage —
+     any narrower and the pill type inside it drops under ~11px */
+  @media (max-width: 1200px) {
+    .cards {
+      grid-template-columns: 1fr;
     }
   }
 
   @media (max-width: 900px) {
     .engagement {
       padding-top: 80px;
-    }
-    .cards {
-      grid-template-columns: 1fr;
     }
   }
 </style>

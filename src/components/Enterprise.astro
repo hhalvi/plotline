@@ -119,6 +119,7 @@ const rows = [
         loading="lazy"
       />
       <div class="cta-shade" aria-hidden="true"></div>
+      <div class="cta-wash" aria-hidden="true"></div>
       <div class="cta-content">
         <p class="cta-heading">Orchestrate 1:1 customer engagement at scale.</p>
         <a href="mailto:hello@plotline.so" class="btn btn-white">Contact us</a>
@@ -191,6 +192,10 @@ const rows = [
   .ent-copy {
     display: grid;
     gap: 12px;
+  }
+
+  /* only the integrations card sits its copy 20px lower (Figma 137:1877) */
+  .ent-integrations .ent-copy {
     padding-top: 20px;
   }
 
@@ -437,8 +442,23 @@ const rows = [
   .cta-shade {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, #05021c 0%, rgba(83, 58, 254, 0) 70%);
-    opacity: 0.9;
+    background: linear-gradient(to bottom, rgba(5, 2, 28, 0.35), rgba(5, 2, 28, 0) 22%);
+  }
+
+  /* the violet wash the artwork carries below the shade — measured off the
+     published design, strongest just under the fold of the dark gradient */
+  .cta-wash {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      rgba(80, 48, 128, 0.75) 4%,
+      rgba(80, 48, 128, 0.71) 19%,
+      rgba(80, 48, 128, 0.58) 35%,
+      rgba(80, 48, 128, 0.46) 50%,
+      rgba(80, 48, 128, 0.3) 65%,
+      rgba(80, 48, 128, 0.19) 81%,
+      rgba(80, 48, 128, 0.05) 96%
+    );
   }
 
   .cta-content {
